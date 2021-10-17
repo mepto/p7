@@ -1,3 +1,5 @@
+from bruteforce import BruteForce
+
 
 if __name__ == '__main__':
-    print('Hi')
+    data = BruteForce().get_combinations()

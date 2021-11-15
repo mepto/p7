@@ -1,7 +1,7 @@
 import csv
 import os
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 
 class NoDataError(Exception):
@@ -9,6 +9,7 @@ class NoDataError(Exception):
 
 
 def get_data_folder():
+    """ Retrieve folder with datasets """
     return os.path.join(os.path.dirname(__file__), "data")
 
 
@@ -17,21 +18,21 @@ class CsvFile:
 
     def __init__(self, filepath=None, data=None):
         self.filepath = filepath
-
         self.data = data
 
     def read(self):
+        """ Read data from csv file """
         if not self.filepath:
             self.filepath = os.path.join(get_data_folder(), 'dataset0_Python+P7.csv')
         all_data = []
         with open(self.filepath, newline='') as csvfile:
-            dataset = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            dataset = csv.reader(csvfile, delimiter=',', quotechar='|')
             next(dataset, None)  # skip the headers
-            for row in dataset:
-                all_data.append(row)
+            all_data += [[row[0], float(row[1]), float(row[2])] for row in dataset]
         return all_data
 
     def write(self):
+        """ Write data to csv file """
         if not self.data:
             raise NoDataError('No data provided. Cannot read data')
         else:

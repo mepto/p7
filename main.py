@@ -1,5 +1,5 @@
 from bruteforce import BruteForce
 
-
 if __name__ == '__main__':
-    data = BruteForce().get_combinations()
+    data = BruteForce()
+    maxed = data.best_item()

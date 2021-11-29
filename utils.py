@@ -20,15 +20,19 @@ class CsvFile:
         self.filepath = filepath
         self.data = data
 
-    def read(self):
+    def read(self) -> dict:
         """ Read data from csv file """
         if not self.filepath:
             self.filepath = os.path.join(get_data_folder(), 'dataset0_Python+P7.csv')
-        all_data = []
+        all_data = {}
         with open(self.filepath, newline='') as csvfile:
             dataset = csv.reader(csvfile, delimiter=',', quotechar='|')
             next(dataset, None)  # skip the headers
-            all_data += [[row[0], float(row[1]), float(row[2])] for row in dataset]
+            for rows in dataset:
+                all_data[rows[0]] = {
+                    'price': float(rows[1]),
+                    'profit': float(rows[2])
+                }
         return all_data
 
     def write(self):
@@ -42,5 +46,6 @@ class CsvFile:
             with open(self.filepath, 'w', newline='') as csvfile:
                 dataset = csv.writer(csvfile, delimiter=' ',
                                      quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                for item in self.data.keys():
-                    csvfile.write("%s,%s\n" % (item, self.data[item]))
+                for wallet in self.data:
+                    for item in wallet:
+                        dataset.writerow(item)

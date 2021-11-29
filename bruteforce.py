@@ -9,51 +9,62 @@ class BruteForce:
     """ Generate investment wallets with brute force """
 
     def __init__(self, dataset=None):
-        self.combinations = self.get_combinations()
-        self.dataset = dataset
-        self.all_wallets = self.get_maxed_combinations()
-
-    def get_combinations(self):
-        """ Generate all actions combinations from csv file data """
         self.dataset = CsvFile().read()
-        combinations = []
-        for i in range(1, len(self.dataset)):
-            combinations += [x for x in itertools.combinations(self.dataset, i)]
-        return combinations
+        self.actions = self.get_actions()
+        print(f'Working with {len(self.actions)} actions...')
+        self.combinations = self.get_combinations()
 
-    @staticmethod
-    def get_total_cost(combination):
+    def get_actions(self) -> list:
+        """ Gets all action names from dataset """
+        return list(self.dataset.keys())
+
+    def get_combinations(self) -> list:
+        """ Generate all actions combinations from csv file data """
+        combs = []
+        for i in range(1, len(self.actions) + 1):
+            combs += list([itertools.combinations(self.actions, i)])
+        return combs
+
+    def get_total_cost(self, combination) -> float:
         """ Get total cost for one combination of actions """
         cost = 0
         for item in combination:
-            cost += item[1]
+            cost += self.dataset[item]['price']
         return cost
 
-    @staticmethod
-    def get_profit(combination):
+    def get_profit(self, combination) -> float:
         """ Get profit for one combination of actions """
         profit = 0
         for item in combination:
-            profit += item[1] * (item[2] / 100)
+            profit += self.dataset[item]['price'] * (self.dataset[item]['profit'] / 100)
         return profit
 
-    def get_maxed_combinations(self):
+    def get_maxed_combinations(self) -> dict:
         """ Get the list of combinations below MAX_TOTAL with price and profit """
         best = []
         profit = 0
-        for combination in self.combinations:
-            total_cost = self.get_total_cost(combination)
-            if total_cost < MAX_TOTAL:
-                current_profit = self.get_profit(combination)
-                if current_profit > profit:
-                    best = {
-                        'wallet': combination,
-                        'cost': total_cost,
-                        'profit': current_profit
-                    }
-                    profit = current_profit
+        for combination_list in self.combinations:
+            for combination in combination_list:
+                total_cost = self.get_total_cost(combination)
+                if total_cost < MAX_TOTAL:
+                    current_profit = self.get_profit(combination)
+                    if current_profit > profit:
+                        best = {
+                            'wallet': combination,
+                            'cost': total_cost,
+                            'profit': current_profit
+                        }
+                        profit = current_profit
         return best
 
     def best_item(self):
         """ Prints best return on investment combination of actions """
-        print(self.get_maxed_combinations())
+        best = self.get_maxed_combinations()
+        print(
+            f"----------------------------\n"
+            f"BEST WALLET (profit {round(best['profit'], 2)}):\n"
+            f"----------------------------\n"
+            f"COST: {best['cost']}\n"
+            f"WALLET: {best['wallet']}\n"
+            f"PROFIT: {best['profit']}\n"
+        )

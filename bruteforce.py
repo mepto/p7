@@ -60,11 +60,4 @@ class BruteForce:
     def best_item(self):
         """ Prints best return on investment combination of actions """
         best = self.get_maxed_combinations()
-        print(
-            f"----------------------------\n"
-            f"BEST WALLET (profit {round(best['profit'], 2)}):\n"
-            f"----------------------------\n"
-            f"COST: {best['cost']}\n"
-            f"WALLET: {best['wallet']}\n"
-            f"PROFIT: {best['profit']}\n"
-        )
+        return best['cost'], best['wallet'], round(best['profit'], 2)

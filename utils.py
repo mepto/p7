@@ -40,7 +40,6 @@ class CsvFile:
             raw_data = reversed(sorted(all_data.items(), key=lambda x: x[1]['ratio']))
         else:
             raw_data = reversed(sorted(all_data.items(), key=lambda x: x[1]['profit']))
-        # sorted_data = dict(raw_data)
         return dict(raw_data)
 
 

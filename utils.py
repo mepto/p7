@@ -1,7 +1,5 @@
 import csv
 import os
-from datetime import datetime
-from pathlib import Path
 
 
 class NoDataError(Exception):
@@ -16,9 +14,10 @@ def get_data_folder():
 class CsvFile:
     """ Read and store data """
 
-    def __init__(self, filepath=None, data=None):
+    def __init__(self, filepath=None, data=None, with_ratio=False):
         self.filepath = filepath
         self.data = data
+        self.with_ratio = with_ratio
 
     def read(self) -> dict:
         """ Read data from csv file """
@@ -33,19 +32,20 @@ class CsvFile:
                     'price': float(rows[1]),
                     'profit': float(rows[2])
                 }
-        return all_data
-
-    def write(self):
-        """ Write data to csv file """
-        if not self.data:
-            raise NoDataError('No data provided. Cannot read data')
+                if self.with_ratio:
+                    all_data[rows[0]].update({
+                        'ratio': float(rows[2]) / float(rows[1])
+                    })
+        if self.with_ratio:
+            raw_data = reversed(sorted(all_data.items(), key=lambda x: x[1]['ratio']))
         else:
-            if not self.filepath:
-                downloads_path = str(Path.home() / "Downloads")
-                self.filepath = f'{downloads_path}_results{datetime.now()}.csv'
-            with open(self.filepath, 'w', newline='') as csvfile:
-                dataset = csv.writer(csvfile, delimiter=' ',
-                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                for wallet in self.data:
-                    for item in wallet:
-                        dataset.writerow(item)
+            raw_data = reversed(sorted(all_data.items(), key=lambda x: x[1]['profit']))
+        # sorted_data = dict(raw_data)
+        return dict(raw_data)
+
+
+def write_results(cost, wallet, profit):
+    print(f"Total cost: {cost}")
+    print("Wallet:")
+    print(f"{wallet}")
+    print(f"Total profit: {profit}")

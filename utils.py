@@ -13,7 +13,6 @@ def get_data_folder():
 
 class CsvFile:
     """ Read and store data """
-
     def __init__(self, filepath=None, data=None, with_ratio=False):
         self.filepath = filepath
         self.data = data
@@ -44,6 +43,7 @@ class CsvFile:
 
 
 def write_results(cost, wallet, profit):
+    """ Write information to console """
     print(f"Total cost: {cost}")
     print("Wallet:")
     print(f"{wallet}")

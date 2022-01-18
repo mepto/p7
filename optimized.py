@@ -4,11 +4,16 @@ MAX_COST = 500
 
 
 class Wallet:
+    """ Create optimised wallet for actions list """
     def __init__(self):
         self.dataset = CsvFile(with_ratio=True).read()
         print(f'Working with {len(self.dataset)} actions...')
 
     def get_max_profit(self):
+        """
+        Provides information on best wallet
+        :return cost (float), wallet (dict), profit (float)
+        """
         wallet = []
         profit_count = 0
         max_wallet_cost = MAX_COST

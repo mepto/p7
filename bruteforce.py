@@ -1,8 +1,7 @@
 import itertools
 
+from constants import MAX_COST
 from utils import CsvFile
-
-MAX_TOTAL = 500
 
 
 class BruteForce:
@@ -36,7 +35,7 @@ class BruteForce:
         """ Get profit for one combination of actions """
         profit = 0
         for item in combination:
-            profit += self.dataset[item]['price'] * (self.dataset[item]['profit'] / 100)
+            profit += self.dataset[item]['actual_profit']
         return profit
 
     def get_maxed_combinations(self) -> dict:
@@ -46,7 +45,7 @@ class BruteForce:
         for combination_list in self.combinations:
             for combination in combination_list:
                 total_cost = self.get_total_cost(combination)
-                if total_cost < MAX_TOTAL:
+                if total_cost < MAX_COST:
                     current_profit = self.get_profit(combination)
                     if current_profit > profit:
                         best = {

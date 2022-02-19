@@ -1,15 +1,16 @@
 from constants import MAX_COST
-from utils import CsvFile
+from utils import CsvFile, timer
 
 
 class Wallet:
     """ Create optimised wallet for actions list """
 
-    def __init__(self):
+    def __init__(self, dataset=None):
         """ Instantiate Wallet object """
-        self.dataset = CsvFile(tup=True).read()
+        self.dataset = CsvFile(tup=True, dataset=dataset).read()
         print(f'Working with {len(self.dataset)} actions...')
 
+    @timer
     def get_best_wallet(self):
         """
         Generate matrix to get best items in wallet

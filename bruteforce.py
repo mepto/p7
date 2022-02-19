@@ -1,14 +1,14 @@
 import itertools
 
 from constants import MAX_COST
-from utils import CsvFile
+from utils import CsvFile, timer
 
 
 class BruteForce:
     """ Generate investment wallets with brute force """
 
     def __init__(self, dataset=None):
-        self.dataset = CsvFile().read()
+        self.dataset = CsvFile(dataset=dataset).read()
         self.actions = self.get_actions()
         print(f'Working with {len(self.actions)} actions...')
         self.combinations = self.get_combinations()
@@ -56,7 +56,8 @@ class BruteForce:
                         profit = current_profit
         return best
 
-    def best_item(self):
+    @timer
+    def get_best_wallet(self):
         """ Prints best return on investment combination of actions """
         best = self.get_maxed_combinations()
         return best['cost'], best['wallet'], round(best['profit'], 2)

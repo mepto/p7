@@ -1,9 +1,7 @@
 import csv
 import os
-
-
-class NoDataError(Exception):
-    pass
+import time
+from datetime import timedelta
 
 
 def get_data_folder():
@@ -14,15 +12,12 @@ def get_data_folder():
 class CsvFile:
     """ Read and store data """
 
-    def __init__(self, filepath=None, data=None, tup=False):
-        self.filepath = filepath
-        self.data = data
+    def __init__(self, dataset, tup=False):
         self.tuple = tup
+        self.filepath = os.path.join(get_data_folder(), dataset)
 
     def read(self) -> dict:
         """ Read data from csv file """
-        if not self.filepath:
-            self.filepath = os.path.join(get_data_folder(), 'dataset0_Python+P7.csv')
 
         if self.tuple:
             all_data = []
@@ -61,9 +56,11 @@ class CsvFile:
         return raw_data
 
 
-def write_results(cost, wallet, profit):
-    """ Write information to console """
-    print(f"Total cost: {cost}")
-    print("Wallet:")
-    print(f"{wallet}")
-    print(f"Total profit: {profit}")
+def timer(func):
+    def inner(*args, **kwargs):
+        start = time.time()
+        f = func(*args, **kwargs)
+        end = time.time()
+        print(f'Processing time: {timedelta(seconds=end - start)}')
+        return f
+    return inner

@@ -1,6 +1,7 @@
 import itertools
 
 from constants import MAX_COST
+from menu import Menu
 from utils import CsvFile, timer
 
 
@@ -10,7 +11,7 @@ class BruteForce:
     def __init__(self, dataset=None):
         self.dataset = CsvFile(dataset=dataset).read()
         self.actions = self.get_actions()
-        print(f'Working with {len(self.actions)} actions...')
+        Menu.actions_nb(len(self.actions))
         self.combinations = self.get_combinations()
 
     def get_actions(self) -> list:
@@ -47,17 +48,18 @@ class BruteForce:
                 total_cost = self.get_total_cost(combination)
                 if total_cost < MAX_COST:
                     current_profit = self.get_profit(combination)
+                    # Replace best if more interesting than the one already stored
                     if current_profit > profit:
                         best = {
                             'wallet': combination,
-                            'cost': total_cost,
-                            'profit': current_profit
+                            'cost': round(total_cost, 2),
+                            'profit': round(current_profit, 2)
                         }
                         profit = current_profit
         return best
 
     @timer
-    def get_best_wallet(self):
+    def get_best_wallet(self) -> (float, list, float):
         """ Prints best return on investment combination of actions """
         best = self.get_maxed_combinations()
-        return best['cost'], best['wallet'], round(best['profit'], 2)
+        return best['cost'], best['wallet'], best['profit']

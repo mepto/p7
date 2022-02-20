@@ -1,20 +1,17 @@
 from enum import Enum
 from types import DynamicClassAttribute
 
-WELCOME = '''
-********************************************
-*       Best wallet finder programme       *
-********************************************'''
-MAIN_MENU = '''---------- SELECT PROGRAMME TYPE -----------
+WELCOME = 'Best wallet finder programme'
+MAIN_MENU = '''[bold blue]---------- SELECT PROGRAMME TYPE -----------[/]
 0 - Exit
 ---------------------
 1 - Bruteforce
 2 - Optimised'''
 FILE_MENU = '''
-------------- SELECT A DATASET -------------
+[bold blue]------------- SELECT A DATASET -------------[/]
 0 - Exit
 ---------------------'''
-EXIT = "--------------- END PROGRAMME ---------------"
+EXIT = "[bold green]END PROGRAMME"
 
 MAX_COST = 500
 

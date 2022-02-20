@@ -3,6 +3,8 @@ import os
 import time
 from datetime import timedelta
 
+from menu import Menu
+
 
 def get_data_folder():
     """ Retrieve folder with datasets """
@@ -44,9 +46,9 @@ class CsvFile:
                     )
                 else:
                     all_data[action] = {
-                        'price': round(cost, 2),
-                        'profit': round(profit, 2),
-                        'actual_profit': round(actual_profit, 2)
+                        'price': cost,
+                        'profit': profit,
+                        'actual_profit': actual_profit
                     }
 
         if not self.tuple:
@@ -61,6 +63,6 @@ def timer(func):
         start = time.time()
         f = func(*args, **kwargs)
         end = time.time()
-        print(f'Processing time: {timedelta(seconds=end - start)}')
+        Menu.timer(timedelta(seconds=end - start))
         return f
     return inner

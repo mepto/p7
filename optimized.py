@@ -1,4 +1,5 @@
 from constants import MAX_COST
+from menu import Menu
 from utils import CsvFile, timer
 
 
@@ -8,7 +9,7 @@ class Wallet:
     def __init__(self, dataset=None):
         """ Instantiate Wallet object """
         self.dataset = CsvFile(tup=True, dataset=dataset).read()
-        print(f'Working with {len(self.dataset)} actions...')
+        Menu.actions_nb(len(self.dataset))
 
     @timer
     def get_best_wallet(self):

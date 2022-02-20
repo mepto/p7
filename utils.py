@@ -29,27 +29,33 @@ class CsvFile:
         with open(self.filepath, newline='') as csvfile:
             dataset = csv.reader(csvfile, delimiter=',', quotechar='|')
             next(dataset, None)  # skip the headers
+            skipped_actions = 0
             for rows in dataset:
-                action = rows[0]
-                cost = int(round(float(rows[1]), 2) * 100)
-                profit = int(round(float(rows[2]), 2) * 100)
-                actual_profit = int(round(float(rows[1]) * (float(rows[2]) / 100), 2) * 100)
+                if float(rows[1]) > 0 and (float(rows[1]) * float(rows[2]) / 100) > 0:
+                    action = rows[0]
+                    cost = int(round(float(rows[1]), 2) * 100)
+                    profit = int(round(float(rows[2]), 2) * 100)
+                    actual_profit = int(round(float(rows[1]) * (float(rows[2]) / 100), 2) * 100)
 
-                if self.tuple:
-                    all_data.append(
-                        (
-                            action,
-                            cost,
-                            profit,
-                            actual_profit
-                        ),
-                    )
+                    if self.tuple:
+                        all_data.append(
+                            (
+                                action,
+                                cost,
+                                profit,
+                                actual_profit
+                            ),
+                        )
+                    else:
+                        all_data[action] = {
+                            'price': cost / 100,
+                            'profit': profit / 100,
+                            'actual_profit': actual_profit / 100
+                        }
                 else:
-                    all_data[action] = {
-                        'price': cost / 100,
-                        'profit': profit / 100,
-                        'actual_profit': actual_profit / 100
-                    }
+                    skipped_actions += 1
+
+        Menu.skipped_entries(skipped_actions)
 
         if not self.tuple:
             raw_data = dict(reversed(sorted(all_data.items(), key=lambda x: x[1]['price'])))

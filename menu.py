@@ -37,6 +37,10 @@ class Menu:
         console.print(f'[bold blue]Working with[/] [yellow]{nb}[/] [bold blue]actions...[/]')
 
     @staticmethod
+    def skipped_entries(nb):
+        console.print(f'{nb} actions were skipped (action price or actual profit were negative)')
+
+    @staticmethod
     def exit():
         console.rule(EXIT)
         sys.exit()

@@ -31,24 +31,24 @@ class CsvFile:
             next(dataset, None)  # skip the headers
             for rows in dataset:
                 action = rows[0]
-                cost = round(float(rows[1]), 2)
-                profit = round(float(rows[2]), 2)
-                actual_profit = round(float(rows[1]) * (float(rows[2]) / 100), 2)
+                cost = int(round(float(rows[1]), 2) * 100)
+                profit = int(round(float(rows[2]), 2) * 100)
+                actual_profit = int(round(float(rows[1]) * (float(rows[2]) / 100), 2) * 100)
 
                 if self.tuple:
                     all_data.append(
                         (
                             action,
-                            int(cost * 100),
-                            int(profit * 100),
-                            int(cost * (profit / 100) * 100)
+                            cost,
+                            profit,
+                            actual_profit
                         ),
                     )
                 else:
                     all_data[action] = {
-                        'price': cost,
-                        'profit': profit,
-                        'actual_profit': actual_profit
+                        'price': cost / 100,
+                        'profit': profit / 100,
+                        'actual_profit': actual_profit / 100
                     }
 
         if not self.tuple:

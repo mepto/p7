@@ -20,10 +20,14 @@ if __name__ == '__main__':
         if item.value == file:
             file = item.file
 
+    # Launch selected algorithm with selected file
     if algo_type == 1:
         cost, wallet, profit = BruteForce(dataset=file).get_best_wallet()
     elif algo_type == 2:
         cost, wallet, profit = Wallet(dataset=file).get_best_wallet()
 
+    # Display results in console
     menu.write_results(cost, wallet, profit)
+
+    # Leave programme
     menu.exit()

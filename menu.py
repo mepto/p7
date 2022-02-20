@@ -18,30 +18,36 @@ class Menu:
 
     @staticmethod
     def welcome():
+        """ Print programme header """
         console.rule('[bold blue]', characters='*')
         console.rule(f'[bold blue]{WELCOME}')
         console.rule('[bold blue]', characters='*')
 
     @staticmethod
     def main_menu():
+        """ Print optimised / bruteforce algorithm options """
         console.print(MAIN_MENU, justify='center')
 
     @staticmethod
     def file_menu():
+        """ Print dataset options """
         console.print(FILE_MENU, justify='center')
         for item in Files:
             console.print(f'{item.value}: {item.name} - {item.file} ([white]{item.info})', justify='center')
 
     @staticmethod
     def actions_nb(nb):
+        """ Print number of actions actually used """
         console.print(f'[bold blue]Working with[/] [yellow]{nb}[/] [bold blue]actions...[/]')
 
     @staticmethod
     def skipped_entries(nb):
+        """ Print the amount of skipped entries """
         console.print(f'{nb} actions were skipped (action price or actual profit were negative)')
 
     @staticmethod
     def exit():
+        """ Prints goodbye message and leave progoramme """
         console.rule(EXIT)
         sys.exit()
 
@@ -56,7 +62,7 @@ class Menu:
 
     @staticmethod
     def write_results(cost, wallet, profit):
-        """ Write information to console """
+        """ Print best wallet """
         console.rule('[bold blue]Results')
         console.print(f"[u bold blue]Total cost:[/] [yellow]{cost}")
         console.print(f"[u bold blue]Total profit:[/] [yellow]{profit}")
@@ -66,4 +72,5 @@ class Menu:
 
     @staticmethod
     def timer(time):
+        """ Print time elapsed for main job """
         console.print(f'[bold blue]Processing time:[/] [yellow]{time}[/]')

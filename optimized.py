@@ -18,18 +18,20 @@ def timer(func):
 
 
 class CsvFile:
-    """Read and store data."""
+    """
+    Read from csv file and return data.
+
+    :return: list
+    """
     def __init__(self, dataset):
         self.filepath = Path(dataset)
         # Check if path provided is relevant
         if not self.filepath.is_file():
             raise FileExistsError('The path provided is not to a file or the file does not exist.')
 
-    def read(self) -> dict:
-        """ Read data from csv file """
-
+    def read(self) -> list:
+        """Read data from csv file."""
         all_data = []
-
         with open(self.filepath, newline='') as csvfile:
             dataset = csv.reader(csvfile, delimiter=',', quotechar='|')
             next(dataset, None)  # skip the headers
@@ -37,6 +39,7 @@ class CsvFile:
             for rows in dataset:
                 if float(rows[1]) > 0 and (float(rows[1]) * float(rows[2]) / 100) > 0:
                     action = rows[0]
+                    # Unfloat costs and profits as matrix will require integers
                     cost = int(round(float(rows[1]), 2) * 100)
                     profit = int(round(float(rows[2]), 2) * 100)
                     actual_profit = int(round(float(rows[1]) * (float(rows[2]) / 100), 2) * 100)
@@ -53,15 +56,13 @@ class CsvFile:
                     skipped_actions += 1
 
         print(f'{skipped_actions} actions were skipped (action price or actual profit were negative).')
-
         return list(reversed(sorted(all_data, key=lambda x: x[1])))
 
 
 class Wallet:
-    """ Create optimised wallet for actions list """
-
+    """Create optimised wallet for actions list."""
     def __init__(self, dataset: dict = None):
-        """ Instantiate Wallet object """
+        """Instantiate Wallet object."""
         self.dataset = CsvFile(dataset).read()
         print(f'Working with {len(self.dataset)} actions...')
 
@@ -69,6 +70,7 @@ class Wallet:
     def get_best_wallet(self) -> tuple[float, tuple, float]:
         """
         Generate matrix to get best items in wallet.
+
         :return: cost as float, wallet as tuple, profit as float
         """
         actions = self.dataset
@@ -97,7 +99,6 @@ class Wallet:
             if matrix[current_row][current_capacity] == matrix[current_row - 1][current_capacity - e[1]] + e[3]:
                 actions_selection.append(e)
                 current_capacity -= e[1]
-
             current_row -= 1
 
         # Get cost and profit actions list based on best wallet
@@ -115,12 +116,11 @@ class Wallet:
 
 
 def init_argparse() -> argparse.ArgumentParser:
-    """Parse arguments passed in command line"""
+    """Parse arguments passed in command line."""
     parser = argparse.ArgumentParser(
         usage="%(prog)s [OPTION] [FILE]...",
         description="Pass a full file path with which to make the best actions wallet."
     )
-
     parser.add_argument('file', nargs='*')
     return parser
 

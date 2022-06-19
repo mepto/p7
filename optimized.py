@@ -94,7 +94,7 @@ class Wallet:
         current_row = len(actions)
         actions_selection = []
 
-        while current_capacity >= 0 and current_row >= 0:
+        while current_capacity >= 0 and current_row > 0:
             e = actions[current_row - 1]
             if matrix[current_row][current_capacity] == matrix[current_row - 1][current_capacity - e[1]] + e[3]:
                 actions_selection.append(e)

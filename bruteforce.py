@@ -1,10 +1,10 @@
 import argparse
 import csv
+import itertools
+import time
 from dataclasses import dataclass
 from datetime import timedelta
-import itertools
 from pathlib import Path
-import time
 
 MAX_COST = 500
 
@@ -42,6 +42,8 @@ class Wallet:
         """Generate all actions combinations from csv file data."""
         combs = []
         for i in range(1, len(self.actions) + 1):
+            # itertools makes a generator and that saves more memory than if
+            # the combinaisons list was done manually with for loops
             combs.append(itertools.combinations(self.actions, i))
         return combs
 

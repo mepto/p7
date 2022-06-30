@@ -1,0 +1,33 @@
+Selected file: C:\Users\hypoc\PycharmProjects\p7\data\dataset1_Python+P7.csv
+45 actions were skipped (action price or actual profit were negative).
+Working with 956 actions...
+Programme duration time: 0:00:17.542711
+----------- Results -----------
+Total cost: 499.95
+Total profit:198.53
+*** BEST WALLET: ***
+Share-EMOV
+Share-FKJW
+Share-GHIZ
+Share-GIAJ
+Share-GTQK
+Share-IFCP
+Share-KMTG
+Share-KZBL
+Share-LGWG
+Share-LPDM
+Share-LRBZ
+Share-MLGM
+Share-MTLR
+Share-NHWA
+Share-QLMK
+Share-QQTU
+Share-SKKC
+Share-UEZB
+Share-USSR
+Share-WPLI
+Share-XJMO
+Share-ZSDE
+mprof: Sampling memory every 0.1s
+running new process
+running as a Python program...

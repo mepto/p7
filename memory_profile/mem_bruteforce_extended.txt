@@ -1,0 +1,22 @@
+Selected file: C:\Users\hypoc\PycharmProjects\p7\data\dataset0_Python+P7_extended.csv
+0 actions were skipped (action price or actual profit were negative).
+Working with 25 actions...
+Programme duration time: 0:00:49.644569
+----------- Results -----------
+Total cost: 499.65
+Total profit:110.63
+*** BEST WALLET: ***
+Action-10
+Action-11
+Action-13
+Action-20
+Action-4
+Action-5
+Action-6
+Share-CFOZ
+Share-GTAN
+Share-QLRX
+Share-USUF
+mprof: Sampling memory every 0.1s
+running new process
+running as a Python program...
